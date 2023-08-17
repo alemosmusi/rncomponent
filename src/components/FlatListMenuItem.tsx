@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon  from 'react-native-vector-icons/Ionicons'
@@ -7,9 +8,16 @@ interface Props {
 }
     
 const FlatListMenuItem = ({menuItem}:Props) => {
+
+
+
+    const navigation = useNavigation() as any
+
+
    return (
     <TouchableOpacity
         activeOpacity={0.8}
+        onPress={()=>navigation.navigate(menuItem.component)}
     >
         
        <View style={styles.container}>
