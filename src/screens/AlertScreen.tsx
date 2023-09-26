@@ -8,7 +8,7 @@ const AlertScreen = () => {
 
     const showAlert = () =>{
 
-        Alert.alert('Titulo', 'Este es el mesnsaje de la alerta', [
+        Alert.alert('Titulo', 'Este es el mesnsaje de la alrta', [
             {
               text: 'Cancel',
               onPress: () => console.log('Cancel Pressed'),
