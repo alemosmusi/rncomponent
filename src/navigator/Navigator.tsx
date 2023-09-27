@@ -12,15 +12,21 @@ import InfiniteScrollScreen from '../screens/InfiniteScrollScreen';
 import {SlidesScreen} from '../screens/SlidesScreen';
 import {ChangeThemeScreen} from '../screens/ChangeThemeScreen';
 import {NavigationContainer} from '@react-navigation/native';
+import { useContext } from 'react';
+import { ThemeContext } from '../context/themeContext/ThemeContext';
 
 const Stack = createStackNavigator();
 
 export const Navigator = () => {
+
+  const {theme} = useContext( ThemeContext)
+
+
+
+
   return (
     <NavigationContainer
-    // theme={
-    //   customTheme
-    // }
+      theme={theme}
     >
       <Stack.Navigator
         screenOptions={{
