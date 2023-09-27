@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
-import { Dimensions, Image, ImageSourcePropType, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Animated, Dimensions, Image, ImageSourcePropType, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Carousel, {Pagination} from 'react-native-snap-carousel';
+import Icon from "react-native-vector-icons/Ionicons";
+import { useAnimation } from '../hooks/useAnimation';
+import { StackScreenProps } from '@react-navigation/stack';
 
 
 const { height : screenHeight, width: screenWidth} = Dimensions.get('window')
@@ -11,6 +14,8 @@ interface Slide{
     desc: string;
     img: ImageSourcePropType
 }
+
+interface Props extends StackScreenProps<any, any>{}
 
 const item: Slide[] =[
     {
@@ -31,9 +36,11 @@ const item: Slide[] =[
 ]
 
 
-export const SlidesScreen = () => {
+export const SlidesScreen = ({navigation}:Props) => {
 
     const [activeIndex, setActiveIndex] = useState(0)
+    const {opacity, fadeIn} = useAnimation()
+    const isVisible  = useRef(false)
 
     const renderItem = (item: Slide) => {
         return (
@@ -81,20 +88,77 @@ export const SlidesScreen = () => {
               layout='default'
               onSnapToItem={(index)=>{
                 setActiveIndex(index)
+                if (index === 2){
+                    isVisible.current = true
+                    fadeIn()
+                }
               }}
             />
+
+
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal:20,
+                alignItems:'center'
+              }}
+            
+            >
+
+                <Pagination 
+                    dotsLength={item.length}
+                    activeDotIndex={activeIndex}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: '#5856D6'
+                    }}
+                
+                />
+
+                        <Animated.View
+                            style={{
+                                opacity
+                            }}
+                        >
+                            <TouchableOpacity style={{
+                                flexDirection: 'row',
+                                backgroundColor: '#5856D6',
+                                width: 140,
+                                height: 50,
+                                borderRadius: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                                activeOpacity={0.8}
+                                onPress={()=>{
+                                    if(isVisible.current){
+                                        navigation.navigate('HomeScreen')
+                                    }
+                                }}
+                            
+                            >
+                                <Text style={{
+                                    fontSize:25,
+                                    color:'white'
+                                }}>
+                                    Entrar
+                                </Text>
+                                <Icon 
+                                    name='chevron-forward-outline'
+                                    color='white'
+                                    size={30}
+                                />
         
-        <Pagination 
-            dotsLength={item.length}
-            activeDotIndex={activeIndex}
-            dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 10,
-                backgroundColor: '#5856D6'
-            }}
+                            </TouchableOpacity>
         
-        />
+                        </Animated.View>
+
+                    
+
+            </View>
+        
     </SafeAreaView>
   )
 }
