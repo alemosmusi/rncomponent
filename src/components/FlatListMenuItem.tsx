@@ -31,7 +31,10 @@ const FlatListMenuItem = ({menuItem}:Props) => {
          color={colors.primary}
          size={23}
         />
-       <Text style={styles.itemText}>
+       <Text style={{
+            ...styles.itemText,
+            color: colors.text
+            }}>
          {menuItem.name} 
        </Text>
        <View style={styles.flechaDerecha}/>
