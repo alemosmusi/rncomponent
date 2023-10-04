@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
 import HeaderTitle from '../components/HeaderTitle'
 import { styles } from '../theme/appTheme'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useForm } from '../hooks/useForm'
 import CustomSwtich from '../components/CustomSwitch'
+import { ThemeContext } from '../context/themeContext/ThemeContext'
     
 const TextInputScreen = () => {
 
@@ -16,6 +17,8 @@ const TextInputScreen = () => {
         isSubscribed:false
     
     })
+
+    const {theme:{colors,dividerColor}} = useContext(ThemeContext)
 
 
 
@@ -37,20 +40,33 @@ const TextInputScreen = () => {
 
 
            <TextInput 
-            style={stylesScreen.inputStyle}
+            style={{
+                ...stylesScreen.inputStyle,
+                borderColor: colors.text,
+                color: colors.text
+
+            }}
             placeholder='Nombre'
             autoCorrect={false}
             autoCapitalize='words'
             onChangeText={(value)=> onChange(value, 'name')}
+            placeholderTextColor={dividerColor}
+
            />
            <TextInput 
-            style={stylesScreen.inputStyle}
+            style={{
+                ...stylesScreen.inputStyle,
+                borderColor: colors.text,
+                color: colors.text
+
+            }}
             placeholder='email'
             autoCorrect={false}
             autoCapitalize='none'
             onChangeText={(value)=> onChange(value, 'email')}
             keyboardType='email-address'
             keyboardAppearance='dark'
+            placeholderTextColor={dividerColor}
             
            />
 
@@ -67,10 +83,16 @@ const TextInputScreen = () => {
            <HeaderTitle title={JSON.stringify(form,null,3)}/>
            <HeaderTitle title={JSON.stringify(form,null,3)}/>
            <TextInput 
-            style={stylesScreen.inputStyle}
+            style={{
+                ...stylesScreen.inputStyle,
+                borderColor: colors.text,
+                color: colors.text
+
+            }}
             placeholder='telefono'
             onChangeText={(value)=> onChange(value, 'phone')}
             keyboardType='phone-pad'
+            placeholderTextColor={dividerColor}
            />
 
             <HeaderTitle title={JSON.stringify(form,null,3)}/>
@@ -89,7 +111,6 @@ const TextInputScreen = () => {
 const stylesScreen = StyleSheet.create({
     inputStyle:{
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.3)',
         height:50,
         paddingHorizontal: 10,
         borderRadius: 10,
